@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import {
   Menu,
   X,
@@ -17,6 +18,14 @@ export default function Navbar({ session }) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    try {
+      await signOut({ callbackUrl: '/' });
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -111,8 +120,7 @@ export default function Navbar({ session }) {
                     <button
                       onClick={() => {
                         setDropdownOpen(false);
-                        // We'll implement logout later
-                        alert('Logout functionality - Coming in Step 4!');
+                        handleLogout();
                       }}
                       className="flex items-center space-x-2 px-4 py-2 hover:bg-red-50 transition w-full text-left"
                     >
@@ -131,7 +139,7 @@ export default function Navbar({ session }) {
                   Login
                 </Link>
                 <Link
-                  href="/login"
+                  href="/register"
                   className="px-4 py-2 bg-blue-600 text-white font-medium hover:bg-blue-700 rounded-lg transition"
                 >
                   Register
@@ -213,9 +221,9 @@ export default function Navbar({ session }) {
                   <button
                     onClick={() => {
                       setIsOpen(false);
-                      alert('Logout - Coming in Step 4!');
+                      handleLogout();
                     }}
-                    className="flex items-center space-x-2 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition"
+                    className="flex items-center space-x-2 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition w-full"
                   >
                     <LogOut className="w-5 h-5" />
                     <span className="font-medium">Logout</span>
@@ -231,7 +239,7 @@ export default function Navbar({ session }) {
                     Login
                   </Link>
                   <Link
-                    href="/login"
+                    href="/register"
                     onClick={() => setIsOpen(false)}
                     className="px-4 py-3 text-center bg-blue-600 text-white font-medium hover:bg-blue-700 rounded-lg transition"
                   >
