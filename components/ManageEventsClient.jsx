@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Trash2, Eye, Plus, Calendar, MapPin, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 export default function ManageEventsClient() {
   const [events, setEvents] = useState([]);
@@ -32,7 +33,19 @@ export default function ManageEventsClient() {
   };
 
   const handleDelete = async (id, title) => {
-    if (!window.confirm(`Are you sure you want to delete "${title}"?`)) {
+    const result = await Swal.fire({
+      title: 'Delete Event?',
+      html: `Are you sure you want to delete <strong>"${title}"</strong>?<br><small>This action cannot be undone.</small>`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -46,13 +59,26 @@ export default function ManageEventsClient() {
 
       if (response.ok) {
         setEvents(events.filter(event => event.id !== id));
-        toast.success('Event deleted successfully');
+
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Event has been deleted successfully.',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       } else {
         throw new Error('Failed to delete');
       }
     } catch (error) {
       console.error('Error deleting event:', error);
-      toast.error('Failed to delete event');
+
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to delete event. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#3b82f6',
+      });
     }
   };
 
