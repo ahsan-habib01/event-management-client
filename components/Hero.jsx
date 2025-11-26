@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 text-white py-20 md:py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-blue-950 via-blue-700 to-purple-800 text-white py-20 md:py-32 overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 bg-black opacity-10"></div>
       <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
