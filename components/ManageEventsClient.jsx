@@ -8,33 +8,46 @@ import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
 export default function ManageEventsClient() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (session?.user?.email) {
-      fetchEvents();
+    if (status === 'authenticated' && session?.user?.email) {
+      fetchUserEvents();
+    } else if (status === 'unauthenticated') {
+      setLoading(false);
     }
-  }, [session]);
+  }, [session, status]);
 
-  const fetchEvents = async () => {
+  const fetchUserEvents = async () => {
     try {
       setLoading(true);
-      // Fetch only user's events
-      const userEmail = session?.user?.email;
+      const userEmail = session.user.email;
+      console.log('🔍 Fetching events for user:', userEmail);
+
+      // First, get all events
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/events/user/${userEmail}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/events`
       );
 
       if (response.ok) {
-        const data = await response.json();
-        setEvents(data);
-        console.log(`✅ Loaded ${data.length} events for user: ${userEmail}`);
+        const allEvents = await response.json();
+        console.log('📦 All events from server:', allEvents);
+
+        // Filter to show only user's events
+        const userEvents = allEvents.filter(
+          event => event.createdBy === userEmail
+        );
+        console.log(`✅ User's events (${userEmail}):`, userEvents);
+
+        setEvents(userEvents);
+      } else {
+        throw new Error('Failed to fetch events');
       }
     } catch (error) {
-      console.error('Error fetching events:', error);
-      toast.error('Failed to load events');
+      console.error('❌ Error fetching events:', error);
+      toast.error('Failed to load your events');
     } finally {
       setLoading(false);
     }
@@ -58,6 +71,7 @@ export default function ManageEventsClient() {
     }
 
     try {
+      console.log('🗑️ Deleting event ID:', id);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/events/${id}`,
         {
@@ -67,6 +81,7 @@ export default function ManageEventsClient() {
 
       if (response.ok) {
         setEvents(events.filter(event => event.id !== id));
+        console.log('✅ Event deleted successfully');
 
         Swal.fire({
           title: 'Deleted!',
@@ -79,7 +94,7 @@ export default function ManageEventsClient() {
         throw new Error('Failed to delete');
       }
     } catch (error) {
-      console.error('Error deleting event:', error);
+      console.error('❌ Error deleting event:', error);
 
       Swal.fire({
         title: 'Error!',
@@ -99,10 +114,20 @@ export default function ManageEventsClient() {
     });
   };
 
-  if (loading) {
+  if (status === 'loading' || loading) {
     return (
       <div className="flex items-center justify-center py-20">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Please login to manage your events
+        </h2>
       </div>
     );
   }

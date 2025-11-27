@@ -25,22 +25,27 @@ export default function EventDetailPage({ params }) {
   const fetchEvent = async () => {
     try {
       setLoading(true);
+      console.log('🔍 Fetching event ID:', params.id);
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/events/${params.id}`
       );
 
+      console.log('📡 Response status:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('✅ Event data received:', data);
         setEvent(data);
       } else if (response.status === 404) {
-        // Event not found
+        console.log('❌ Event not found');
         setEvent(null);
         toast.error('Event not found');
       } else {
         throw new Error('Failed to fetch event');
       }
     } catch (error) {
-      console.error('Error fetching event:', error);
+      console.error('❌ Error fetching event:', error);
       toast.error('Failed to load event details');
       setEvent(null);
     } finally {
