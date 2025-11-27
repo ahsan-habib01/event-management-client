@@ -31,87 +31,25 @@ export default function EventsPage() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/events`
       );
+
       if (response.ok) {
         const data = await response.json();
         setEvents(data);
+        console.log('✅ Events loaded from server:', data.length);
       } else {
-        // Use demo data if server not available
-        setEvents(demoEvents);
+        throw new Error('Failed to fetch events');
       }
     } catch (error) {
-      console.error('Error fetching events:', error);
-      setEvents(demoEvents);
+      console.error('❌ Error fetching events:', error);
+      toast.error('Failed to load events from server');
+      // Show empty state instead of demo data
+      setEvents([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const demoEvents = [
-    {
-      id: 1,
-      title: 'Tech Conference 2024',
-      shortDescription:
-        'Join us for the biggest tech conference featuring industry leaders...',
-      date: '2024-12-15',
-      location: 'San Francisco, CA',
-      price: '$299',
-      category: 'Technology',
-      imageUrl: '🚀',
-    },
-    {
-      id: 2,
-      title: 'Music Festival Summer',
-      shortDescription:
-        'Experience three days of amazing music performances...',
-      date: '2025-01-20',
-      location: 'Austin, TX',
-      price: '$150',
-      category: 'Music',
-      imageUrl: '🎵',
-    },
-    {
-      id: 3,
-      title: 'Food & Wine Expo',
-      shortDescription:
-        'Taste exquisite dishes and wines from renowned chefs...',
-      date: '2025-02-05',
-      location: 'New York, NY',
-      price: '$75',
-      category: 'Food',
-      imageUrl: '🍷',
-    },
-    {
-      id: 4,
-      title: 'Startup Pitch Day',
-      shortDescription:
-        'Watch innovative startups pitch their ideas to investors...',
-      date: '2025-03-10',
-      location: 'Seattle, WA',
-      price: 'Free',
-      category: 'Business',
-      imageUrl: '💼',
-    },
-    {
-      id: 5,
-      title: 'Art Gallery Opening',
-      shortDescription: 'Explore contemporary art from emerging artists...',
-      date: '2025-04-12',
-      location: 'Los Angeles, CA',
-      price: '$25',
-      category: 'Art',
-      imageUrl: '🎨',
-    },
-    {
-      id: 6,
-      title: 'Marathon Challenge',
-      shortDescription: 'Run for a cause in our annual charity marathon...',
-      date: '2025-05-01',
-      location: 'Boston, MA',
-      price: '$50',
-      category: 'Sports',
-      imageUrl: '🏃',
-    },
-  ];
+  const demoEvents = [];
 
   const filteredEvents = events.filter(event => {
     const matchesSearch =
@@ -209,7 +147,7 @@ export default function EventsPage() {
                 className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group"
               >
                 {/* Image/Icon */}
-                <div className="h-48 bg-gradient-to-br from-blue-950 via-blue-700 to-purple-800 flex items-center justify-center text-6xl relative overflow-hidden">
+                <div className="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-6xl relative overflow-hidden">
                   <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition"></div>
                   <span className="transform group-hover:scale-110 transition">
                     {event.imageUrl || '📅'}

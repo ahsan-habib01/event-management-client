@@ -28,53 +28,24 @@ export default function EventDetailPage({ params }) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/events/${params.id}`
       );
+
       if (response.ok) {
         const data = await response.json();
         setEvent(data);
+      } else if (response.status === 404) {
+        // Event not found
+        setEvent(null);
+        toast.error('Event not found');
       } else {
-        // Use demo data
-        setEvent(getDemoEvent(params.id));
+        throw new Error('Failed to fetch event');
       }
     } catch (error) {
       console.error('Error fetching event:', error);
-      setEvent(getDemoEvent(params.id));
+      toast.error('Failed to load event details');
+      setEvent(null);
     } finally {
       setLoading(false);
     }
-  };
-
-  const getDemoEvent = id => {
-    const demoEvents = {
-      1: {
-        id: 1,
-        title: 'Tech Conference 2024',
-        shortDescription:
-          'Join us for the biggest tech conference featuring industry leaders...',
-        fullDescription:
-          'Join us for the biggest tech conference of the year! This three-day event brings together industry leaders, innovators, and tech enthusiasts from around the world. Experience keynote speeches from top executives, hands-on workshops, and networking opportunities that will shape the future of technology. Learn about cutting-edge developments in AI, blockchain, cloud computing, and more. Connect with fellow professionals and discover the latest products and services from leading tech companies.',
-        date: '2024-12-15',
-        time: '09:00',
-        location: 'Moscone Center, San Francisco, CA',
-        price: '$299',
-        category: 'Technology',
-        imageUrl: '🚀',
-      },
-      2: {
-        id: 2,
-        title: 'Music Festival Summer',
-        shortDescription:
-          'Experience three days of amazing music performances...',
-        fullDescription:
-          'Experience three unforgettable days of amazing music performances from top artists worldwide. This summer music festival features multiple stages with diverse genres including rock, pop, electronic, and indie music. Enjoy food trucks, art installations, and camping options. Dance under the stars and create memories that will last a lifetime. With over 50 artists performing, this is the ultimate music experience.',
-        date: '2025-01-20',
-        time: '12:00',
-        location: 'Zilker Park, Austin, TX',
-        price: '$150',
-        category: 'Music',
-        imageUrl: '🎵',
-      },
-    };
-    return demoEvents[id] || demoEvents['1'];
   };
 
   const formatDate = dateString => {
@@ -115,17 +86,29 @@ export default function EventDetailPage({ params }) {
 
   if (!event) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Event not found
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 max-w-md">
+          <div className="text-6xl mb-4">😕</div>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            Event Not Found
           </h2>
-          <button
-            onClick={() => router.push('/events')}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            Back to Events
-          </button>
+          <p className="text-gray-600 mb-6">
+            The event you're looking for doesn't exist or may have been deleted.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => router.back()}
+              className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+            >
+              Go Back
+            </button>
+            <button
+              onClick={() => router.push('/events')}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              Browse Events
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -134,7 +117,7 @@ export default function EventDetailPage({ params }) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Banner */}
-      <div className="relative h-96 bg-gradient-to-br from-blue-950 via-blue-700 to-purple-800 overflow-hidden">
+      <div className="relative h-96 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="absolute inset-0 flex items-center justify-center text-9xl animate-scaleIn">
           {event.imageUrl || '📅'}
