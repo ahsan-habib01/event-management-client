@@ -6,10 +6,6 @@ A modern, full-stack event management application built with Next.js 14, NextAut
 
 EventHub is a comprehensive event management platform that allows users to discover, create, and manage events. The application features authentication, protected routes, real-time data management, and a beautiful, responsive UI.
 
-**Student Name:** [Your Name]  
-**Task Code:** EJP-12  
-**Submission Date:** [Date]
-
 ---
 
 ## ✨ Features
@@ -328,37 +324,6 @@ These are intentional for demo purposes and can be extended for production.
 - [NextAuth.js Documentation](https://next-auth.js.org/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Express.js Documentation](https://expressjs.com/)
-
----
-
-## 📄 License
-
-MIT License - feel free to use this project for learning purposes.
-
----
-
-## 👨‍💻 Author
-
-**[Your Name]**  
-Task: EJP-12 - Next.js Event Management System  
-Date: [Submission Date]
-
----
-
-## 🙏 Acknowledgments
-
-- Next.js team for the amazing framework
-- Vercel for hosting solutions
-- Tailwind CSS for the utility-first CSS framework
-- All open-source contributors
-
----
-
-## 📞 Support
-
-For questions or issues:
-- Email: support@eventhub.com
-- GitHub Issues: [Your Repo URL]
 
 ---
 
