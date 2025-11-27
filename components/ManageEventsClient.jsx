@@ -2,27 +2,35 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { Trash2, Eye, Plus, Calendar, MapPin, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
 export default function ManageEventsClient() {
+  const { data: session } = useSession();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    if (session?.user?.email) {
+      fetchEvents();
+    }
+  }, [session]);
 
   const fetchEvents = async () => {
     try {
       setLoading(true);
+      // Fetch only user's events
+      const userEmail = session?.user?.email;
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/events`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/events/user/${userEmail}`
       );
+
       if (response.ok) {
         const data = await response.json();
         setEvents(data);
+        console.log(`✅ Loaded ${data.length} events for user: ${userEmail}`);
       }
     } catch (error) {
       console.error('Error fetching events:', error);

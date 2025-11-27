@@ -64,10 +64,14 @@ export default function RegisterPage() {
   };
 
   const handleGoogleSignup = async () => {
-    setLoading(true);
     try {
-      await signIn('google', { callbackUrl: '/' });
+      setLoading(true);
+      await signIn('google', {
+        callbackUrl: '/',
+        redirect: true,
+      });
     } catch (error) {
+      console.error('Google signup error:', error);
       toast.error('Google signup failed');
       setLoading(false);
     }
@@ -147,47 +151,47 @@ export default function RegisterPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-bold text-gray-800 mb-2">
                 Full Name *
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-500 z-10" />
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full pl-11 pr-4 py-4 text-gray-900 bg-white border-2 border-purple-200 rounded-xl focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition placeholder-gray-400 font-medium shadow-sm"
                   placeholder="John Doe"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-bold text-gray-800 mb-2">
                 Email Address *
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-500 z-10" />
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full pl-11 pr-4 py-4 text-gray-900 bg-white border-2 border-purple-200 rounded-xl focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition placeholder-gray-400 font-medium shadow-sm"
                   placeholder="you@example.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-bold text-gray-800 mb-2">
                 Password *
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-500 z-10" />
                 <input
                   type="password"
                   name="password"
@@ -195,7 +199,7 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   minLength={6}
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full pl-11 pr-4 py-4 text-gray-900 bg-white border-2 border-purple-200 rounded-xl focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition placeholder-gray-400 font-medium shadow-sm"
                   placeholder="••••••••"
                 />
               </div>
@@ -203,11 +207,11 @@ export default function RegisterPage() {
               {formData.password && (
                 <div className="mt-2">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs text-gray-600">
+                    <span className="text-xs font-bold text-gray-700">
                       Password strength:
                     </span>
                     <span
-                      className={`text-xs font-semibold ${
+                      className={`text-xs font-bold ${
                         passwordStrength.strength === 1
                           ? 'text-red-500'
                           : passwordStrength.strength === 2
@@ -218,9 +222,9 @@ export default function RegisterPage() {
                       {passwordStrength.label}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
-                      className={`h-1.5 rounded-full transition-all ${passwordStrength.color}`}
+                      className={`h-2 rounded-full transition-all ${passwordStrength.color}`}
                       style={{
                         width: `${(passwordStrength.strength / 3) * 100}%`,
                       }}
@@ -231,18 +235,18 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-bold text-gray-800 mb-2">
                 Confirm Password *
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-500 z-10" />
                 <input
                   type="password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  className="w-full pl-11 pr-4 py-4 text-gray-900 bg-white border-2 border-purple-200 rounded-xl focus:ring-4 focus:ring-purple-300 focus:border-purple-500 transition placeholder-gray-400 font-medium shadow-sm"
                   placeholder="••••••••"
                 />
                 {formData.confirmPassword &&
@@ -279,7 +283,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold hover:from-purple-700 hover:to-pink-700 transition transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-lg"
             >
               {loading ? (
                 <>

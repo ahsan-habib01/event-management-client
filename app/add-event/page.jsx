@@ -11,15 +11,15 @@ export default async function AddEventPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8 animate-fadeIn">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
               Create New Event
             </h1>
-            <p className="text-gray-600 text-lg">
-              Fill in the details below to create your event
+            <p className="text-gray-700 text-lg font-medium">
+              Fill in the details below to create your amazing event
             </p>
           </div>
 
