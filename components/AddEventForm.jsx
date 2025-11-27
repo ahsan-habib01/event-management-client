@@ -124,7 +124,7 @@ export default function AddEventForm() {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Short Description *{' '}
-            <span className="text-gray-500 font-normal">(1-2 lines)</span>
+            <span className="text-gray-900 font-normal">(1-2 lines)</span>
           </label>
           <input
             type="text"
