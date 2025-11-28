@@ -189,17 +189,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200 animate-fadeIn">
-            <p className="text-sm font-semibold text-blue-800 mb-2">
-              Demo Credentials:
-            </p>
-            <p className="text-xs text-blue-700">
-              Email: demo@example.com
-              <br />
-              Password: password123
-            </p>
-          </div>
 
           {/* Register Link */}
           <div className="mt-6 text-center">
