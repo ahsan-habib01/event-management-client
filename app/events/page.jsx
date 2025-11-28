@@ -69,7 +69,7 @@ export default function EventsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+        <Loader2 className="w-12 h-12 text-sky-600 animate-spin" />
       </div>
     );
   }
@@ -99,7 +99,7 @@ export default function EventsPage() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search events by name or description..."
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition"
               />
             </div>
 
@@ -113,7 +113,7 @@ export default function EventsPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4 py-2 rounded-lg font-medium transition whitespace-nowrap ${
                       selectedCategory === category
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
@@ -151,7 +151,7 @@ export default function EventsPage() {
                   className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group"
                 >
                   {/* Image/Icon */}
-                  <div className="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-6xl relative overflow-hidden">
+                  <div className="h-48 bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-6xl relative overflow-hidden">
                     <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition"></div>
                     <span className="transform group-hover:scale-110 transition">
                       {event.imageUrl || '📅'}
@@ -161,12 +161,12 @@ export default function EventsPage() {
                   {/* Content */}
                   <div className="p-6">
                     {/* Category Badge */}
-                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full mb-3">
+                    <span className="inline-block px-3 py-1 bg-sky-100 text-sky-700 text-xs font-semibold rounded-full mb-3">
                       {event.category}
                     </span>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-blue-600 transition">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-sky-600 transition">
                       {event.title}
                     </h3>
 
@@ -178,21 +178,21 @@ export default function EventsPage() {
                     {/* Meta Info */}
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center text-gray-600 text-sm">
-                        <Calendar className="w-4 h-4 mr-2 text-blue-600" />
+                        <Calendar className="w-4 h-4 mr-2 text-sky-600" />
                         <span>{formatDate(event.date)}</span>
                       </div>
                       <div className="flex items-center text-gray-600 text-sm">
-                        <MapPin className="w-4 h-4 mr-2 text-blue-600" />
+                        <MapPin className="w-4 h-4 mr-2 text-sky-600" />
                         <span className="line-clamp-1">{event.location}</span>
                       </div>
                     </div>
 
                     {/* Price and CTA */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                      <span className="text-2xl font-bold text-blue-600">
+                      <span className="text-2xl font-bold text-sky-600">
                         {event.price}
                       </span>
-                      <span className="bg-blue-600 text-white px-6 py-2 rounded-lg group-hover:bg-blue-700 transition">
+                      <span className="bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-2 rounded-lg group-hover:from-sky-600 group-hover:to-blue-700 transition">
                         Details
                       </span>
                     </div>
@@ -215,7 +215,7 @@ export default function EventsPage() {
                 setSearchQuery('');
                 setSelectedCategory('all');
               }}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+              className="bg-gradient-to-r from-sky-500 to-blue-600 text-white px-6 py-3 rounded-lg hover:from-sky-600 hover:to-blue-700 transition"
             >
               Clear Filters
             </button>

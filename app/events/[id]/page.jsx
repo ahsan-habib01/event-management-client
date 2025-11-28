@@ -81,7 +81,7 @@ export default function EventDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+        <Loader2 className="w-12 h-12 text-sky-600 animate-spin" />
       </div>
     );
   }
@@ -106,7 +106,7 @@ export default function EventDetailPage() {
             </button>
             <button
               onClick={() => router.push('/events')}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className="px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg hover:from-sky-600 hover:to-blue-700 transition"
             >
               Browse Events
             </button>
@@ -119,7 +119,7 @@ export default function EventDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Banner */}
-      <div className="relative h-96 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 overflow-hidden">
+      <div className="relative h-96 bg-gradient-to-br from-sky-500 to-blue-600 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="absolute inset-0 flex items-center justify-center text-9xl animate-scaleIn">
           {event.imageUrl || '📅'}
@@ -143,7 +143,7 @@ export default function EventDetailPage() {
             <div className="lg:col-span-2 animate-slideUp">
               <div className="bg-white rounded-xl shadow-md p-8 mb-8">
                 {/* Category Badge */}
-                <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 text-sm font-semibold rounded-full mb-4">
+                <span className="inline-block px-4 py-2 bg-sky-100 text-sky-700 text-sm font-semibold rounded-full mb-4">
                   {event.category}
                 </span>
 
@@ -168,7 +168,7 @@ export default function EventDetailPage() {
                     Organized By
                   </h3>
                   <div className="flex items-center space-x-4">
-                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                    <div className="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
                       {event.createdBy?.charAt(0).toUpperCase() || 'U'}
                     </div>
                     <div>
@@ -189,7 +189,7 @@ export default function EventDetailPage() {
                 <div className="flex gap-3">
                   <button
                     onClick={handleShare}
-                    className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
+                    className="flex-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-lg hover:from-sky-600 hover:to-blue-700 transition font-semibold"
                   >
                     Share
                   </button>
@@ -215,7 +215,7 @@ export default function EventDetailPage() {
                 {/* Price */}
                 <div className="mb-6 pb-6 border-b border-gray-200">
                   <p className="text-gray-600 mb-2">Price</p>
-                  <p className="text-3xl font-bold text-blue-600">
+                  <p className="text-3xl font-bold text-sky-600">
                     {event.price}
                   </p>
                 </div>
@@ -223,7 +223,7 @@ export default function EventDetailPage() {
                 {/* Event Details */}
                 <div className="space-y-4 mb-6">
                   <div className="flex items-start space-x-3">
-                    <Calendar className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <Calendar className="w-5 h-5 text-sky-600 mt-1 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-gray-800">Date</p>
                       <p className="text-gray-600 text-sm">
@@ -234,7 +234,7 @@ export default function EventDetailPage() {
 
                   {event.time && (
                     <div className="flex items-start space-x-3">
-                      <Clock className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                      <Clock className="w-5 h-5 text-sky-600 mt-1 flex-shrink-0" />
                       <div>
                         <p className="font-semibold text-gray-800">Time</p>
                         <p className="text-gray-600 text-sm">{event.time}</p>
@@ -243,7 +243,7 @@ export default function EventDetailPage() {
                   )}
 
                   <div className="flex items-start space-x-3">
-                    <MapPin className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <MapPin className="w-5 h-5 text-sky-600 mt-1 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-gray-800">Location</p>
                       <p className="text-gray-600 text-sm">{event.location}</p>
@@ -253,7 +253,7 @@ export default function EventDetailPage() {
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition transform hover:scale-105 shadow-lg">
+                  <button className="w-full bg-gradient-to-r from-sky-500 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-sky-600 hover:to-blue-700 transition transform hover:scale-105 shadow-lg">
                     Register Now
                   </button>
 
