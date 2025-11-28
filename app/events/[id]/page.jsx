@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import {
   ArrowLeft,
   Calendar,
@@ -13,14 +13,17 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-export default function EventDetailPage({ params }) {
+export default function EventDetailPage() {
   const router = useRouter();
+  const params = useParams(); // Use useParams hook to get the id
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchEvent();
-  }, []);
+    if (params?.id) {
+      fetchEvent();
+    }
+  }, [params?.id]);
 
   const fetchEvent = async () => {
     try {

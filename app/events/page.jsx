@@ -34,26 +34,23 @@ export default function EventsPage() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('✅ Events loaded from server:', data);
+        console.log('First event structure:', data[0]); // Debug: Check first event structure
         setEvents(data);
-        console.log('✅ Events loaded from server:', data.length);
       } else {
         throw new Error('Failed to fetch events');
       }
     } catch (error) {
       console.error('❌ Error fetching events:', error);
-      toast.error('Failed to load events from server');
-      // Show empty state instead of demo data
       setEvents([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const demoEvents = [];
-
   const filteredEvents = events.filter(event => {
     const matchesSearch =
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       event.shortDescription?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory =
       selectedCategory === 'all' || event.category === selectedCategory;
@@ -140,61 +137,69 @@ export default function EventsPage() {
         {/* Events Grid */}
         {filteredEvents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto animate-stagger">
-            {filteredEvents.map(event => (
-              <Link
-                key={event.id}
-                href={`/events/${event.id}`}
-                className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group"
-              >
-                {/* Image/Icon */}
-                <div className="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-6xl relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition"></div>
-                  <span className="transform group-hover:scale-110 transition">
-                    {event.imageUrl || '📅'}
-                  </span>
-                </div>
+            {filteredEvents.map(event => {
+              // Get the correct ID field (handles both _id and id)
+              const eventId = event._id || event.id;
 
-                {/* Content */}
-                <div className="p-6">
-                  {/* Category Badge */}
-                  <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full mb-3">
-                    {event.category}
-                  </span>
+              // Debug log for each event
+              console.log('Event:', event.title, 'ID:', eventId);
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-blue-600 transition">
-                    {event.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {event.shortDescription}
-                  </p>
-
-                  {/* Meta Info */}
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-gray-600 text-sm">
-                      <Calendar className="w-4 h-4 mr-2 text-blue-600" />
-                      <span>{formatDate(event.date)}</span>
-                    </div>
-                    <div className="flex items-center text-gray-600 text-sm">
-                      <MapPin className="w-4 h-4 mr-2 text-blue-600" />
-                      <span className="line-clamp-1">{event.location}</span>
-                    </div>
-                  </div>
-
-                  {/* Price and CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                    <span className="text-2xl font-bold text-blue-600">
-                      {event.price}
-                    </span>
-                    <span className="bg-blue-600 text-white px-6 py-2 rounded-lg group-hover:bg-blue-700 transition">
-                      Details
+              return (
+                <Link
+                  key={eventId}
+                  href={`/events/${eventId}`}
+                  className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group"
+                >
+                  {/* Image/Icon */}
+                  <div className="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-6xl relative overflow-hidden">
+                    <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition"></div>
+                    <span className="transform group-hover:scale-110 transition">
+                      {event.imageUrl || '📅'}
                     </span>
                   </div>
-                </div>
-              </Link>
-            ))}
+
+                  {/* Content */}
+                  <div className="p-6">
+                    {/* Category Badge */}
+                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full mb-3">
+                      {event.category}
+                    </span>
+
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1 group-hover:text-blue-600 transition">
+                      {event.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {event.shortDescription}
+                    </p>
+
+                    {/* Meta Info */}
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center text-gray-600 text-sm">
+                        <Calendar className="w-4 h-4 mr-2 text-blue-600" />
+                        <span>{formatDate(event.date)}</span>
+                      </div>
+                      <div className="flex items-center text-gray-600 text-sm">
+                        <MapPin className="w-4 h-4 mr-2 text-blue-600" />
+                        <span className="line-clamp-1">{event.location}</span>
+                      </div>
+                    </div>
+
+                    {/* Price and CTA */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                      <span className="text-2xl font-bold text-blue-600">
+                        {event.price}
+                      </span>
+                      <span className="bg-blue-600 text-white px-6 py-2 rounded-lg group-hover:bg-blue-700 transition">
+                        Details
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-20">
