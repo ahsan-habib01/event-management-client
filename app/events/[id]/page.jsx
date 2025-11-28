@@ -35,18 +35,16 @@ export default function EventDetailPage({ params }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('✅ Event data received:', data);
+        console.log('✅ Event loaded:', data);
         setEvent(data);
-      } else if (response.status === 404) {
+      } else {
         console.log('❌ Event not found');
         setEvent(null);
         toast.error('Event not found');
-      } else {
-        throw new Error('Failed to fetch event');
       }
     } catch (error) {
-      console.error('❌ Error fetching event:', error);
-      toast.error('Failed to load event details');
+      console.error('❌ Error:', error);
+      toast.error('Failed to load event');
       setEvent(null);
     } finally {
       setLoading(false);
@@ -70,15 +68,11 @@ export default function EventDetailPage({ params }) {
           text: event.shortDescription,
           url: window.location.href,
         })
-        .catch(err => console.log('Error sharing:', err));
+        .catch(() => {});
     } else {
       navigator.clipboard.writeText(window.location.href);
       toast.success('Link copied to clipboard!');
     }
-  };
-
-  const handleSave = () => {
-    toast.success('Event saved to your favorites!');
   };
 
   if (loading) {
@@ -98,7 +92,7 @@ export default function EventDetailPage({ params }) {
             Event Not Found
           </h2>
           <p className="text-gray-600 mb-6">
-            The event you're looking for doesn't exist or may have been deleted.
+            This event doesn't exist or may have been deleted.
           </p>
           <div className="flex gap-4 justify-center">
             <button
@@ -161,33 +155,26 @@ export default function EventDetailPage({ params }) {
                     About This Event
                   </h2>
                   <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                    {event.fullDescription || event.shortDescription}
+                    {event.fullDescription}
                   </p>
                 </div>
 
-                {/* What's Included */}
+                {/* Organizer */}
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <h3 className="text-xl font-bold text-gray-800 mb-4">
-                    What&apos;s Included
+                    Organized By
                   </h3>
-                  <ul className="space-y-2 text-gray-700">
-                    <li className="flex items-center">
-                      <span className="text-green-500 mr-2">✓</span>
-                      Full event access
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-green-500 mr-2">✓</span>
-                      Networking opportunities
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-green-500 mr-2">✓</span>
-                      Event materials and resources
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-green-500 mr-2">✓</span>
-                      Certificate of attendance
-                    </li>
-                  </ul>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                      {event.createdBy?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800 text-lg">
+                        {event.createdBy}
+                      </p>
+                      <p className="text-gray-600 text-sm">Event Organizer</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -263,14 +250,11 @@ export default function EventDetailPage({ params }) {
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
-                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105 active:scale-95">
+                  <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition transform hover:scale-105 shadow-lg">
                     Register Now
                   </button>
 
-                  <button
-                    onClick={handleSave}
-                    className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition flex items-center justify-center space-x-2"
-                  >
+                  <button className="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition flex items-center justify-center space-x-2">
                     <Heart className="w-5 h-5" />
                     <span>Save Event</span>
                   </button>
