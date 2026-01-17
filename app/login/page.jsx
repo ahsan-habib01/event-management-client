@@ -74,7 +74,21 @@ export default function LoginPage() {
             Welcome back! Sign in to your account
           </p>
         </div>
-
+        {/* Demo Credentials Card */}{' '}
+        <div className="bg-sky-50 border-2 border-sky-200 rounded-xl p-4 mb-6">
+          {' '}
+          <p className="text-sm font-semibold text-sky-800 mb-2">
+            📝 Demo Credentials:
+          </p>{' '}
+          <p className="text-sm text-sky-700">
+            Email:{' '}
+            <span className="font-mono font-bold">demo@eventhub.com</span>
+          </p>{' '}
+          <p className="text-sm text-sky-700">
+            Password: <span className="font-mono font-bold">password123</span>
+          </p>{' '}
+        </div>
+        
         {/* Main Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8 animate-slideUp">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -189,7 +203,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-
           {/* Register Link */}
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">
@@ -203,7 +216,6 @@ export default function LoginPage() {
             </p>
           </div>
         </div>
-
         {/* Back to Home */}
         <div className="text-center mt-6 animate-fadeIn">
           <Link
