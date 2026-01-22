@@ -30,7 +30,7 @@ export default function Testimonials() {
       rating: 5,
     },
     {
-      name: 'Lisa Thompson',
+      name: 'Will Thompson',
       role: 'Corporate Event Director',
       text: 'From small meetings to large conferences, this tool handles everything seamlessly. A game-changer for our team!',
       rating: 5,
