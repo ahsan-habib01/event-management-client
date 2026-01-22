@@ -32,7 +32,7 @@ export default function Features() {
     {
       icon: Zap,
       title: 'Real-time Updates',
-      description: 'Get instant notifications about event changes and updates',
+      description: 'Get instant notifications about event changes and updates!',
       color: 'from-pink-500 to-rose-500',
     },
     {
