@@ -13,7 +13,7 @@ export default function PopularEvents() {
     {
       title: 'Music Festival',
       date: 'Jan 20, 2025',
-      location: 'Austin, TX',
+      location: 'RTEC Auditorium, TX',
       price: '$150',
       image: '🎵',
     },
